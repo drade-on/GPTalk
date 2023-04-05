@@ -1,14 +1,22 @@
 /* eslint-disable no-undef */
-import { PaperClipIcon, XMarkIcon } from '@heroicons/react/24/solid'
+import { PaperAirplaneIcon, PaperClipIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import React, {useState} from 'react'
 import Dropzone from 'react-dropzone'
 
-function StandardMessageForm() {
+const StandardMessageForm = ({props,activeChat}) => {
+
   const [message, setMessage] = useState("")
   const [attachment, setAttachment] = useState("")
   const [preview, setPreviev] = useState("")
 
   const handleChange = (e)=>setMessage(e.target.value)
+
+  const handleSubmit = async () => {
+    const date = new Date()
+    .toISOString()
+    .replace("T", " ")
+    .replace("Z", `${Math.floor(Math.random()*1000)}+00:00`) 
+  }
 
   return (
     <div className="message-form-container">
@@ -54,7 +62,13 @@ function StandardMessageForm() {
             </div>
             )}
           </Dropzone>
-          <hr className=''/>
+          <hr className='vertical-line'/>
+          <PaperAirplaneIcon
+          className='message0form-icon-airplane'
+          onClick={()=>{
+            setPreview("")
+            // handleSubmit()
+          }}/>
         </div>
       </div>
     </div>
