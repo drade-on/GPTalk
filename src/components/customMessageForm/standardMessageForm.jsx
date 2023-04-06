@@ -11,18 +11,35 @@ const StandardMessageForm = ({props,activeChat}) => {
 
   const handleChange = (e)=>setMessage(e.target.value)
 
+  
+
   const handleSubmit = async () => {
     const date = new Date()
     .toISOString()
     .replace("T", " ")
     .replace("Z", `${Math.floor(Math.random()*1000)}+00:00`) 
+    const at = attachment ? [{blob: attachment,file: attachment.name}]: [];
+    const form = {
+      attachments: at,
+      created: date,
+      sender_username: props.username,
+      text: message,
+      activeChatID: activeChat.id,
+    }
+    props.onSubmit(form)
+    setMessage("")
+    setAttachment("")
   }
 
   return (
     <div className="message-form-container">
       {preview && (
         <div className="message-form-preview">
-          <img src={preview} alt="preview" onLoad={() => URL.revokeObjectURL(preview)} className="message-form-preview-image" />
+          <img src={preview} 
+          alt="preview"
+          onLoad={() => URL.revokeObjectURL(preview)}
+          className="message-form-preview-image"
+          />
           <XMarkIcon
             className='message-form-icon-x'
             onClick={() => {
@@ -61,13 +78,13 @@ const StandardMessageForm = ({props,activeChat}) => {
                />
             </div>
             )}
-          </Dropzone>
+            </Dropzone>
           <hr className='vertical-line'/>
           <PaperAirplaneIcon
-          className='message0form-icon-airplane'
+          className='message-form-icon-airplane'
           onClick={()=>{
-            setPreview("")
-            // handleSubmit()
+            setPreviev("")
+            handleSubmit()
           }}/>
         </div>
       </div>
